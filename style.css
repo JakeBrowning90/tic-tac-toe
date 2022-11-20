@@ -25,8 +25,9 @@ body {
 }
 
 .setupScreen {
-    height: 100%;
-    width: 100%;
+    background-color: pink;
+    height: 50%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
