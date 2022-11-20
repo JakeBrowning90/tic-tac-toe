@@ -14,7 +14,7 @@ let currentPlayer = player1;
 const gameBoard = (() => {
     let newGrid = ["", "", "", "", "", "", "", "", ""];
     function freshGrid() {
-        let newGrid = ["", "", "", "", "", "", "", "", ""];
+        newGrid = ["", "", "", "", "", "", "", "", ""];
     }
     return {newGrid, freshGrid};
 })();
@@ -27,6 +27,14 @@ const displayController = (() => {
     setupScreen.classList.add("setupScreen");
     const matchScreen = document.createElement("div");
     matchScreen.classList.add("matchScreen");
+
+    //test board reset button
+    const resetButton = document.createElement("button");
+    resetButton.textContent = "Reset";
+    resetButton.classList.add("resetButton");
+    resetButton.addEventListener("click", restartGame);
+    const footer = document.querySelector(".footer");
+    footer.appendChild(resetButton);
     
     //Show player name input
     function drawSetupScreen() {
@@ -60,8 +68,8 @@ const displayController = (() => {
         gameBoard.newGrid[cell] = currentPlayer.gamePiece;
         //console.log(gameBoard.newGrid.indexOf(cell));
         currentPlayer.capturedSquares.push(cell);
-        //console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
-        //console.log(gameBoard.newGrid);
+        console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
+        console.log(gameBoard.newGrid);
         winnerCheck();
         tieCheck()
         playerSwap();
@@ -96,7 +104,7 @@ const displayController = (() => {
 
     function tieCheck(){
         //check if any free cells remain
-        if (!gameBoard.newGrid.includes("")) {
+        if (!gameBoard.newGrid.includes("") && gameOver == false) {
             console.log("Tie game");
             gameOver = true;
         }
@@ -119,11 +127,16 @@ const displayController = (() => {
           }
     }
 
-    //restart game
+    //reset gameboard array, redraw playfield
     function restartGame() {
+        gameOver = false;
+        gameBoard.newGrid = ["", "", "", "", "", "", "", "", ""];
+        player1.capturedSquares = [];
+        player2.capturedSquares = [];
+        currentPlayer = player1;
         refreshGrid();
-        gameBoard.freshGrid();
         drawPlayfield();
+        //return gameBoard.newGrid;
     }
 
     return {drawPlayfield, drawSetupScreen, restartGame};
