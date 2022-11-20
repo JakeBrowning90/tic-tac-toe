@@ -18,6 +18,24 @@ body {
 
 .content {
     background-color: grey;
+    display: flex;
+    padding:10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.setupScreen {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.matchScreen {
+    background-color: navy;
+    height: 100%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);

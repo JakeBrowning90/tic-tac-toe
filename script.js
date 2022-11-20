@@ -23,16 +23,33 @@ const gameBoard = (() => {
 const displayController = (() => {
     let gameOver = false;
     const content = document.querySelector(".content")
+    const setupScreen = document.createElement("div");
+    setupScreen.classList.add("setupScreen");
+    const matchScreen = document.createElement("div");
+    matchScreen.classList.add("matchScreen");
+    
     //Show player name input
+    function drawSetupScreen() {
+        const startGame = document.createElement("button");
+        startGame.textContent = "Start game";
+        startGame.addEventListener('click', function(){
+            content.removeChild(setupScreen);
+            drawPlayfield();
+        });
+        setupScreen.appendChild(startGame);
+        content.appendChild(setupScreen);
+        return;
+    }
 
     //Show grid on page
     function drawPlayfield() {
+        content.appendChild(matchScreen);
         for (const cell in gameBoard.newGrid) {
             const boardSquare = document.createElement("div");
             boardSquare.classList.add("cell");
             boardSquare.textContent = gameBoard.newGrid[cell];
             boardSquare.addEventListener("click", function(){playerMove(cell)});
-            content.appendChild(boardSquare);
+            matchScreen.appendChild(boardSquare);
         }
         return;
     }
@@ -97,8 +114,8 @@ const displayController = (() => {
 
     //clear grid display
     function refreshGrid() {
-        while (content.firstChild) {
-            content.removeChild(content.lastChild);
+        while (matchScreen.firstChild) {
+            matchScreen.removeChild(matchScreen.lastChild);
           }
     }
 
@@ -109,7 +126,8 @@ const displayController = (() => {
         drawPlayfield();
     }
 
-    return {drawPlayfield, restartGame};
+    return {drawPlayfield, drawSetupScreen, restartGame};
 })();
 
-displayController.drawPlayfield();
+displayController.drawSetupScreen();
+//displayController.drawPlayfield();
