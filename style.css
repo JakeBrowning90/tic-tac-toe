@@ -1,4 +1,5 @@
 body {
+    color: aqua;
     height: 100vh;
     width: 100vw;
     display: grid;
@@ -26,6 +27,7 @@ body {
     border-color: aqua;
     border-width: 2px;
     border-style: solid;
+    font-size: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
