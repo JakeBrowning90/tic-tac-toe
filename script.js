@@ -1,6 +1,6 @@
 "use strict";
 
-//factory for players, assign name, piece, captured squares, and currentPlayer property
+//factory for players, assign name, piece, captured squares
 const player = (playerName, gamePiece) => {
     let capturedSquares = [];
     return {playerName, gamePiece, capturedSquares}; 
@@ -49,12 +49,34 @@ const displayController = (() => {
     
     //Show player name input
     function drawSetupScreen() {
+        const player1Label = document.createElement("label");
+        player1Label.setAttribute("for", "player1Input");
+        player1Label.textContent = "Player 1 (X): ";
+        const player1Input = document.createElement("input");
+        player1Input.setAttribute("required", "");
+        player1Input.setAttribute("id", "player1Input");
+        player1Input.setAttribute("name", "player1Input");
+
+        const player2Label = document.createElement("label");
+        player2Label.setAttribute("for", "player2Label");
+        player2Label.textContent = "Player 2 (O): ";
+        const player2Input = document.createElement("input");
+        player2Input.setAttribute("required", "");
+        player2Input.setAttribute("id", "player2Input");
+        player2Input.setAttribute("name", "player2Input");
+
         const startGame = document.createElement("button");
         startGame.textContent = "Start game";
         startGame.addEventListener('click', function(){
+            player1.playerName = player1Input.value; 
+            player2.playerName = player2Input.value; 
             content.removeChild(setupScreen);
             drawPlayfield();
         });
+        setupScreen.appendChild(player1Label);
+        setupScreen.appendChild(player1Input);
+        setupScreen.appendChild(player2Label);
+        setupScreen.appendChild(player2Input);
         setupScreen.appendChild(startGame);
         content.appendChild(setupScreen);
         return;
@@ -64,6 +86,7 @@ const displayController = (() => {
     function drawPlayfield() {
         clearContent();
         content.appendChild(playerDisplay);
+        playerDisplay.textContent = currentPlayer.playerName + "'s turn";
         content.appendChild(matchGrid);
         for (const cell in gameBoard.newGrid) {
             const boardSquare = document.createElement("div");
@@ -110,7 +133,8 @@ const displayController = (() => {
                 currentPlayer.capturedSquares.includes(i));
             if (winner == true) {
                 // Set flag to prevent further moves
-                console.log(currentPlayer.playerName + " wins!");
+                //console.log(currentPlayer.playerName + " wins!");
+                resultsDisplay.textContent = currentPlayer.playerName + " wins!"
                 gameOver = true;
             }
         }
@@ -119,7 +143,8 @@ const displayController = (() => {
     function tieCheck(){
         //check if any free cells remain
         if (!gameBoard.newGrid.includes("") && gameOver == false) {
-            console.log("Tie game");
+            //console.log("Tie game");
+            resultsDisplay.textContent = "Tie game"
             gameOver = true;
         }
     }
@@ -141,6 +166,8 @@ const displayController = (() => {
         player1.capturedSquares = [];
         player2.capturedSquares = [];
         currentPlayer = player1;
+        playerDisplay.textContent = "";
+        resultsDisplay.textContent = "";
         refreshGrid();
         clearContent();
         drawPlayfield();
