@@ -18,22 +18,30 @@ body {
 
 .content {
     background-color: grey;
-    display: flex;
     padding:10px;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr 8fr 1fr;
 }
 
 .setupScreen {
     background-color: pink;
-    height: 50%;
-    width: 50%;
+    height: 100%;
+    width: 100%;
+    grid-row: 1 / -1;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.matchScreen {
+.playerDisplay {
+    background-color: greenyellow;
+}
+
+.resultsDisplay {
+    background-color: orange;
+}
+
+.matchGrid {
     background-color: navy;
     height: 100%;
     width: 100%;

@@ -25,16 +25,27 @@ const displayController = (() => {
     const content = document.querySelector(".content")
     const setupScreen = document.createElement("div");
     setupScreen.classList.add("setupScreen");
-    const matchScreen = document.createElement("div");
-    matchScreen.classList.add("matchScreen");
+    const matchGrid = document.createElement("div");
+    matchGrid.classList.add("matchGrid");
+    const playerDisplay = document.createElement("div");
+    playerDisplay.classList.add("playerDisplay");
+    const resultsDisplay = document.createElement("div");
+    resultsDisplay.classList.add("resultsDisplay");
 
     //test board reset button
     const resetButton = document.createElement("button");
-    resetButton.textContent = "Reset";
+    resetButton.textContent = "Rematch";
     resetButton.classList.add("resetButton");
     resetButton.addEventListener("click", restartGame);
+    const homeButton = document.createElement("button");
+
+    //test return to homescreen button
+    homeButton.textContent = "Change players";
+    homeButton.classList.add("homeButton");
+    homeButton.addEventListener("click", changePlayers);
     const footer = document.querySelector(".footer");
     footer.appendChild(resetButton);
+    footer.appendChild(homeButton);
     
     //Show player name input
     function drawSetupScreen() {
@@ -51,14 +62,17 @@ const displayController = (() => {
 
     //Show grid on page
     function drawPlayfield() {
-        content.appendChild(matchScreen);
+        clearContent();
+        content.appendChild(playerDisplay);
+        content.appendChild(matchGrid);
         for (const cell in gameBoard.newGrid) {
             const boardSquare = document.createElement("div");
             boardSquare.classList.add("cell");
             boardSquare.textContent = gameBoard.newGrid[cell];
             boardSquare.addEventListener("click", function(){playerMove(cell)});
-            matchScreen.appendChild(boardSquare);
+            matchGrid.appendChild(boardSquare);
         }
+        content.appendChild(resultsDisplay);
         return;
     }
 
@@ -120,13 +134,6 @@ const displayController = (() => {
         }
     }
 
-    //clear grid display
-    function refreshGrid() {
-        while (matchScreen.firstChild) {
-            matchScreen.removeChild(matchScreen.lastChild);
-          }
-    }
-
     //reset gameboard array, redraw playfield
     function restartGame() {
         gameOver = false;
@@ -135,8 +142,38 @@ const displayController = (() => {
         player2.capturedSquares = [];
         currentPlayer = player1;
         refreshGrid();
+        clearContent();
         drawPlayfield();
         //return gameBoard.newGrid;
+    }
+
+    function changePlayers() {
+        restartGame();
+        refreshGrid();
+        clearContent();
+        refreshSetup();
+        drawSetupScreen();
+    }
+
+    //clear grid display
+    function refreshGrid() {
+        while (matchGrid.firstChild) {
+            matchGrid.removeChild(matchGrid.lastChild);
+            }
+    }
+
+     //clear grid display
+     function refreshSetup() {
+        while (setupScreen.firstChild) {
+            setupScreen.removeChild(setupScreen.lastChild);
+            }
+    }
+    
+    //Clear whole content div
+    function clearContent() {
+        while (content.firstChild) {
+            content.removeChild(content.lastChild);
+        }
     }
 
     return {drawPlayfield, drawSetupScreen, restartGame};
