@@ -44,8 +44,8 @@ const displayController = (() => {
     homeButton.classList.add("homeButton");
     homeButton.addEventListener("click", changePlayers);
     const footer = document.querySelector(".footer");
-    footer.appendChild(resetButton);
-    footer.appendChild(homeButton);
+    // footer.appendChild(resetButton);
+    // footer.appendChild(homeButton);
     
     //Show player name input
     function drawSetupScreen() {
@@ -96,6 +96,8 @@ const displayController = (() => {
             matchGrid.appendChild(boardSquare);
         }
         content.appendChild(resultsDisplay);
+        resultsDisplay.appendChild(resetButton);
+        resultsDisplay.appendChild(homeButton);
         return;
     }
 
@@ -128,12 +130,10 @@ const displayController = (() => {
             ["0", "4", "8"],
             ["2", "4", "6"]];
         for (const set in winningOutcomes) {
-            //console.log(winningOutcomes[set]);
             let winner = winningOutcomes[set].every(i => 
                 currentPlayer.capturedSquares.includes(i));
             if (winner == true) {
                 // Set flag to prevent further moves
-                //console.log(currentPlayer.playerName + " wins!");
                 resultsDisplay.textContent = currentPlayer.playerName + " wins!"
                 gameOver = true;
             }
@@ -143,7 +143,6 @@ const displayController = (() => {
     function tieCheck(){
         //check if any free cells remain
         if (!gameBoard.newGrid.includes("") && gameOver == false) {
-            //console.log("Tie game");
             resultsDisplay.textContent = "Tie game"
             gameOver = true;
         }
