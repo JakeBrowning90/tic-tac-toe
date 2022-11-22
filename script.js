@@ -23,7 +23,7 @@ const gameBoard = (() => {
 const displayController = (() => {
     let gameOver = false;
     const content = document.querySelector(".content")
-    const setupScreen = document.createElement("div");
+    const setupScreen = document.createElement("form");
     setupScreen.classList.add("setupScreen");
     const matchGrid = document.createElement("div");
     matchGrid.classList.add("matchGrid");
@@ -31,6 +31,9 @@ const displayController = (() => {
     playerDisplay.classList.add("playerDisplay");
     const resultsDisplay = document.createElement("div");
     resultsDisplay.classList.add("resultsDisplay");
+
+    const winnerBanner = document.createElement("div");
+    winnerBanner.classList.add("winnerBanner");
 
     //test board reset button
     const resetButton = document.createElement("button");
@@ -40,7 +43,7 @@ const displayController = (() => {
     const homeButton = document.createElement("button");
 
     //test return to homescreen button
-    homeButton.textContent = "Change players";
+    homeButton.textContent = "Change Players";
     homeButton.classList.add("homeButton");
     homeButton.addEventListener("click", changePlayers);
     const footer = document.querySelector(".footer");
@@ -49,6 +52,11 @@ const displayController = (() => {
     
     //Show player name input
     function drawSetupScreen() {
+        //const gameSetupForm = document.createElement("form")
+        const player1Area = document.createElement("div");
+        player1Area.classList.add("playerNameInput");
+        const player2Area = document.createElement("div");
+        player2Area.classList.add("playerNameInput");
         const player1Label = document.createElement("label");
         player1Label.setAttribute("for", "player1Input");
         player1Label.textContent = "Player 1 (X): ";
@@ -65,19 +73,26 @@ const displayController = (() => {
         player2Input.setAttribute("id", "player2Input");
         player2Input.setAttribute("name", "player2Input");
 
-        const startGame = document.createElement("button");
-        startGame.textContent = "Start game";
-        startGame.addEventListener('click', function(){
+        const startGame = document.createElement("input");
+        startGame.setAttribute("type", "submit");
+        startGame.setAttribute("value", "Start Game");
+        setupScreen.addEventListener('submit', (event) => {
+            event.preventDefault()
             player1.playerName = player1Input.value; 
             player2.playerName = player2Input.value; 
-            content.removeChild(setupScreen);
+            //setupScreen.removeChild(gameSetupForm);
+            refreshGrid()
+            clearContent();
             drawPlayfield();
         });
-        setupScreen.appendChild(player1Label);
-        setupScreen.appendChild(player1Input);
-        setupScreen.appendChild(player2Label);
-        setupScreen.appendChild(player2Input);
+        player1Area.appendChild(player1Label);
+        player1Area.appendChild(player1Input);
+        player2Area.appendChild(player2Label);
+        player2Area.appendChild(player2Input);
+        setupScreen.appendChild(player1Area);
+        setupScreen.appendChild(player2Area);
         setupScreen.appendChild(startGame);
+        //setupScreen.appendChild(gameSetupForm);
         content.appendChild(setupScreen);
         return;
     }
@@ -86,7 +101,12 @@ const displayController = (() => {
     function drawPlayfield() {
         clearContent();
         content.appendChild(playerDisplay);
-        playerDisplay.textContent = currentPlayer.playerName + "'s turn";
+        if (gameOver == false) {
+            playerDisplay.textContent = currentPlayer.playerName + "'s turn";
+            }
+        else {
+            playerDisplay.textContent = ""
+            }
         content.appendChild(matchGrid);
         for (const cell in gameBoard.newGrid) {
             const boardSquare = document.createElement("div");
@@ -96,6 +116,7 @@ const displayController = (() => {
             matchGrid.appendChild(boardSquare);
         }
         content.appendChild(resultsDisplay);
+        resultsDisplay.appendChild(winnerBanner);
         resultsDisplay.appendChild(resetButton);
         resultsDisplay.appendChild(homeButton);
         return;
@@ -104,16 +125,16 @@ const displayController = (() => {
     //update cell contents when player clicks on unclaimed cell
     function playerMove(cell) {
         if (gameBoard.newGrid[cell] == "" && gameOver == false) {
-        gameBoard.newGrid[cell] = currentPlayer.gamePiece;
-        //console.log(gameBoard.newGrid.indexOf(cell));
-        currentPlayer.capturedSquares.push(cell);
-        console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
-        console.log(gameBoard.newGrid);
-        winnerCheck();
-        tieCheck()
-        playerSwap();
-        refreshGrid();
-        drawPlayfield();
+            gameBoard.newGrid[cell] = currentPlayer.gamePiece;
+            //console.log(gameBoard.newGrid.indexOf(cell));
+            currentPlayer.capturedSquares.push(cell);
+            console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
+            console.log(gameBoard.newGrid);
+            winnerCheck();
+            tieCheck()
+            playerSwap();
+            refreshGrid();
+            drawPlayfield();
         }
     }
 
@@ -134,7 +155,7 @@ const displayController = (() => {
                 currentPlayer.capturedSquares.includes(i));
             if (winner == true) {
                 // Set flag to prevent further moves
-                resultsDisplay.textContent = currentPlayer.playerName + " wins!"
+                winnerBanner.textContent = currentPlayer.playerName + " wins!"
                 gameOver = true;
             }
         }
@@ -143,7 +164,7 @@ const displayController = (() => {
     function tieCheck(){
         //check if any free cells remain
         if (!gameBoard.newGrid.includes("") && gameOver == false) {
-            resultsDisplay.textContent = "Tie game"
+            winnerBanner.textContent = "Tie game"
             gameOver = true;
         }
     }
@@ -166,7 +187,7 @@ const displayController = (() => {
         player2.capturedSquares = [];
         currentPlayer = player1;
         playerDisplay.textContent = "";
-        resultsDisplay.textContent = "";
+        winnerBanner.textContent = "";
         refreshGrid();
         clearContent();
         drawPlayfield();
@@ -188,7 +209,7 @@ const displayController = (() => {
             }
     }
 
-     //clear grid display
+     //clear setup form
      function refreshSetup() {
         while (setupScreen.firstChild) {
             setupScreen.removeChild(setupScreen.lastChild);
