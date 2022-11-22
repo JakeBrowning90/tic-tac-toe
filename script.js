@@ -75,6 +75,7 @@ const displayController = (() => {
 
         const startGame = document.createElement("input");
         startGame.setAttribute("type", "submit");
+        startGame.classList.add("startButton");
         startGame.setAttribute("value", "Start Game");
         setupScreen.addEventListener('submit', (event) => {
             event.preventDefault()

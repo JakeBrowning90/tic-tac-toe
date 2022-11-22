@@ -1,5 +1,22 @@
+@font-face {
+    font-family: Hylia;
+    src: url(fonts/HyliaSerifBeta-Regular.otf);
+}
+
+@font-face {
+    font-family: OpenSans;
+    src: url(fonts/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
 body {
-    color: aqua;
+    font-family: OpenSans;
+    font-weight: 300;
+    color: #1cf5fd;
+    background-color: #2b2d30;
+    background-image: url(images/sheikahSlateBlank.jpg);
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: contain;
     height: 100vh;
     width: 100vw;
     display: grid;
@@ -7,13 +24,20 @@ body {
     grid-template-rows: 10vh 1fr 10vh;
 }
 
+.resetButton, .homeButton, .startButton {
+    background-color: #2b2d30;
+    border: #1cf5fd 1px solid;
+    color: #1cf5fd;
+    font-size: 1rem;
+}
+
 .header, .footer {
     grid-column: 1 / -1;
-    background-color: rgb(3, 3, 92);
+    /*background-color: #2b2d30;*/
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 5px;
 }
 
 .header {
@@ -21,11 +45,11 @@ body {
 }
 
 .sidebar {
-    background-color: rgba(143, 143, 143, 0.633);
+
 }
 
 .content {
-    background-color: navy;
+
     display: grid;
     grid-template-rows: 1fr auto 1fr;
 }
@@ -50,7 +74,7 @@ body {
 
 .playerDisplay, .resultsDisplay {
     height: 100%;
-    width: 65vh;
+    width: 60vh;
     place-self: center;
     font-size: 1.5rem;
     display: flex;
@@ -80,23 +104,23 @@ body {
 }
 
 .matchGrid {
-    background-color: navy;
-    height: 65vh;
-    width: 65vh;
+    height: 60vh;
+    width: 60vh;
     place-self: center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
 }
 
 .cell {
-    border-color: aqua;
     border-width: 2px;
     border-style: solid;
     font-size: 6rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: Hylia;
 }
 
 .cell:hover {
