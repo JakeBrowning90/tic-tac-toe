@@ -129,8 +129,8 @@ const displayController = (() => {
             gameBoard.newGrid[cell] = currentPlayer.gamePiece;
             //console.log(gameBoard.newGrid.indexOf(cell));
             currentPlayer.capturedSquares.push(cell);
-            console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
-            console.log(gameBoard.newGrid);
+            // console.log(currentPlayer.playerName, currentPlayer.capturedSquares);
+            // console.log(gameBoard.newGrid);
             winnerCheck();
             tieCheck()
             playerSwap();
