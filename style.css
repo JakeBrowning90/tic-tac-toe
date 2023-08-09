@@ -20,9 +20,8 @@ body {
     background-size: 100% 100%;
     height: 100vh;
     width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr 8fr 1fr;
-    grid-template-rows: 10vh 1fr 10vh;
+    display: flex;
+    flex-direction: column;
 }
 
 button, input {
@@ -32,13 +31,15 @@ button, input {
     font-size: 1rem;
 }
 
-.header, .footer {
-    grid-column: 1 / -1;
-    /*background-color: #2b2d30;*/
+a, a:visited {
+    color: #1cf5fd;
+}
+
+header, footer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 5px;
 }
 
 .header {
