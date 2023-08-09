@@ -22,7 +22,7 @@ const gameBoard = (() => {
 //module for display controller
 const displayController = (() => {
     let gameOver = false;
-    const content = document.querySelector(".content")
+    const content = document.querySelector("main")
     const setupScreen = document.createElement("form");
     setupScreen.classList.add("setupScreen");
     const matchGrid = document.createElement("div");
