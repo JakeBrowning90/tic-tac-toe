@@ -10,7 +10,7 @@
 
 body {
     font-family: OpenSans;
-    font-weight: 300;
+    font-weight: 400;
     color: #1cf5fd;
     background-color: #2b2d30;
     background-image: url(images/sheikahSlateBlank.jpg);
@@ -25,7 +25,7 @@ body {
     grid-template-rows: 10vh 1fr 10vh;
 }
 
-.resetButton, .homeButton, .startButton {
+button, input {
     background-color: #2b2d30;
     border: #1cf5fd 1px solid;
     color: #1cf5fd;
