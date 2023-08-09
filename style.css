@@ -54,6 +54,7 @@ h1 {
 main {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .setupScreen {
@@ -74,7 +75,7 @@ main {
 }
 
 .playerDisplay, .resultsDisplay {
-    height: 100%;
+    height: auto;
     width: 60vh;
     place-self: center;
     font-size: 1.5rem;
@@ -103,8 +104,9 @@ main {
 }
 
 .matchGrid {
-    height: 60vh;
+    /* height: 60vh; */
     width: 60vh;
+    aspect-ratio: 1 /1 ;
     place-self: center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -115,7 +117,7 @@ main {
 .cell {
     border-width: 2px;
     border-style: solid;
-    font-size: 6rem;
+    font-size: 15vh;
     display: flex;
     align-items: center;
     justify-content: center;
